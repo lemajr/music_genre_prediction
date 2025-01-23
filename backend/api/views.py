@@ -8,20 +8,29 @@
 #     serializer_class = ItemSerializer
 
     
-
+import os
 import joblib
 import numpy as np
-from rest_framework.views import APIView
+from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import MusicRecommendationSerializer
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_PATH = os.path.join(BASE_DIR, "music-recommender.joblib")  
+
 # Load the pre-trained model
-MODEL_PATH = "music-music-recommender.joblib"
 model = joblib.load(MODEL_PATH)
 
-class MusicRecommendationView(APIView):
-    def post(self, request):
+try:
+    model = joblib.load(MODEL_PATH)
+    print("Model loaded successfully!")
+except FileNotFoundError as e:
+    print(f"Error: {e}")
+
+
+class MusicRecommendationViewSet(viewsets.ViewSet):
+    def create(self, request, *args, **kwargs):
         serializer = MusicRecommendationSerializer(data=request.data)
 
         # Validate the input
@@ -34,7 +43,8 @@ class MusicRecommendationView(APIView):
             gender_value = 1 if gender == "male" else 0
 
             # Prepare input for the model
-            input_data = np.array([[gender_value, age]])
+            input_data = np.array([[age, gender_value]])
+
 
             # Predict the genre
             prediction = model.predict(input_data)

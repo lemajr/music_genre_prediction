@@ -1,6 +1,10 @@
 from django.urls import path
-from .views import MusicRecommendationView
+from rest_framework.routers import DefaultRouter
+from .views import MusicRecommendationViewSet
 
-urlpatterns = [
-    path('predict/', MusicRecommendationView.as_view(), name='predict_genre'),
-]
+# Create a router and register your viewset
+router = DefaultRouter()
+router.register(r'predict', MusicRecommendationViewSet, basename='predict_genre')
+
+# Define the URLs
+urlpatterns = router.urls
