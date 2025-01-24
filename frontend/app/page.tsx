@@ -23,7 +23,8 @@ export default function Home() {
     setError('');
     try {
       const genre = await predictGenre(age as number, gender);
-      // router.push(`/player?genre=${genre}`);
+      // console.log(genre);
+      router.push(`/player?genre=${genre}`);
     } catch (err) {
       console.error(err);
       setError('Failed to predict genre. Try again later.');

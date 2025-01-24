@@ -43,13 +43,13 @@ export default function Player() {
           {tracks.map((track) => (
             <div key={track.id} className="bg-white p-4 shadow-md rounded">
               <img
-                src={track.album_image}
-                alt={track.name}
+                src={track.album_image || 'default-cover.jpg'}
+                alt={track.name || 'Unknown Track'}
                 className="w-full h-40 object-cover mb-2 rounded"
               />
-              <h2 className="font-bold">{track.name}</h2>
-              <p className="text-sm text-gray-500">{track.artist_name}</p>
-              <audio controls src={track.audio} className="mt-2 w-full" />
+              <h2 className="font-bold">{track.name || 'Unknown Title'}</h2>
+              <p className="text-sm text-gray-500">{track.artist_name || 'Unknown Artist'}</p>
+              <audio controls   src={track.audio || undefined} className="mt-2 w-full" />
             </div>
           ))}
         </div>

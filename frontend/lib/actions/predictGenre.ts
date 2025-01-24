@@ -8,8 +8,8 @@ export const predictGenre = async (age: number, gender: string) => {
         gender,
         age,
     });
-    console.log(response.data.genre);
-    return response.data.genre;
+    // console.log(response.data.predicted_genre);
+    return response.data.predicted_genre;
 
   } catch (error) {
     console.error('Error predicting genre:', error);
